@@ -11,7 +11,7 @@ namespace Fitly_Domain.Business
     {
         private PersistenceController _persistenceController;
 
-       
+
         public Controller()
         {
             _persistenceController = new PersistenceController();
@@ -31,6 +31,12 @@ namespace Fitly_Domain.Business
             _persistenceController = new PersistenceController();
             return _persistenceController.GetOefeningsFromDB(workoutId);
         }
+        public void AddSporter(Sporter sporters)
+        {
+            _persistenceController = new PersistenceController();
+            _persistenceController.AddSporter(sporters);
 
+
+        }
     }
 }

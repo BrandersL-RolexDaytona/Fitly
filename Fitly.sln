@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitly_Domain", "Fitly_Domain\Fitly_Domain.csproj", "{C48A7898-BD3F-465B-9A83-F1BCE8E80370}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitly_WPF", "Fitly_WPF\Fitly_WPF.csproj", "{9256C055-CCE4-4077-9D25-1ED0E2B99664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppFitly", "WebAppFitly\WebAppFitly.csproj", "{A3C6837E-DDD7-4A83-9BF6-761795904FB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9256C055-CCE4-4077-9D25-1ED0E2B99664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9256C055-CCE4-4077-9D25-1ED0E2B99664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9256C055-CCE4-4077-9D25-1ED0E2B99664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C6837E-DDD7-4A83-9BF6-761795904FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C6837E-DDD7-4A83-9BF6-761795904FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C6837E-DDD7-4A83-9BF6-761795904FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C6837E-DDD7-4A83-9BF6-761795904FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

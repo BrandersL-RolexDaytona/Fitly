@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Create/Edit Sporter";
+}
+@model Fitly_Domain.Business.Sporter
+
+<div class="text-center">
+    <h1 class="display-4">Create or edit a sporter</h1>
+    
+</div>
+<form asp-action="CreateEditSporterForm" asp-asp-controller="Home">
+   @*  <label>Id</label>
+    <input class="form-control" type="number" placeholder="0" asp-for="Id" /> *@
+
+    <label class="mt-4">Naamsporter</label>
+    <input class="form-control" type="text" placeholder="add a description" asp-for="NaamSporter" />
+
+    <label class="mt-4">Voornaamsporter</label>
+    <input class="form-control" type="text" placeholder="add a description" asp-for="VoornaamSporter" />
+
+    <label class="mt-4">Mailsporter</label>
+    <input class="form-control" type="text" placeholder="add a description" asp-for="MailSporter" />
+
+    <label class="mt-4">Wachtwoord</label>
+    <input class="form-control" type="text" placeholder="add a description" asp-for="Wachtwoord" />
+
+    <label class="mt-4">GeboortedatumSporter</label>
+    <input class="form-control" type="date" placeholder="/" asp-for="GeboortedatumSporter" />
+
+    <label class="mt-4">Lengte</label>
+    <input class="form-control" type="number" placeholder="0" asp-for="Lengte" />
+
+    <label class="mt-4">Geslacht</label>
+    <input class="form-control" type="text" placeholder="add a description" asp-for="Geslacht" />
+
+    <button class="btn btn-primary mt-4" type="submit">Ok</button>
+
+
+</form>

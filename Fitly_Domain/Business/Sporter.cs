@@ -11,69 +11,68 @@ namespace Fitly_Domain.Business
     {
 
         // Velden
-        private int _idSporter;
-        private string _naamSporter;
-        private string _voornaamSporter;
-        private string _mailSporter;
-        private string _wachtwoord;
-        private DateTime _geboortedatumSporter;
-        private double _lengte;
-        private string _geslacht;
+        //private int _idSporter;
+        //private string _naamSporter;
+        //private string _voornaamSporter;
+        //private string _mailSporter;
+        //private string _wachtwoord;
+        //private DateTime _geboortedatumSporter;
+        //private double _lengte;
+        //private string _geslacht;
 
         // Properties
-        public int IdSporter
-        { get { return _idSporter; } }
+        public int Id
+        { get;  set; }
 
         public string NaamSporter
-        { get { return _naamSporter; } }
+        { get; set; }
 
         public string VoornaamSporter
-        { get { return _voornaamSporter ; } }
-
+        { get; set; }
         public string MailSporter
-        { get { return _mailSporter; } }
-
+        { get; set; }
         public string Wachtwoord
-        { get { return _wachtwoord; } }
-
+        { get; set; }
         public DateTime GeboortedatumSporter
-        { get { return _geboortedatumSporter; } } 
-
+        { get; set; }
         public double Lengte
-        { get { return _lengte; } }
+        { get; set; }
         public string Geslacht
-        { get { return _geslacht; } }
-
+        { get; set; }
         // Constructor met ID (bijv. voor bestaande databaseobjecten)
+        public Sporter()
+        {
+
+        }
         public Sporter(int idSporter, string naamSporter, string voornaamSporter, string mailSporter,string wachtwoord, DateTime geboortedatumSporter,string geslacht, double lengte)
         {
-            _idSporter = idSporter;
-            _naamSporter = naamSporter;
-            _voornaamSporter = voornaamSporter;
-            _mailSporter = mailSporter;
-            _wachtwoord = wachtwoord;
-            _geboortedatumSporter = geboortedatumSporter;
-            _lengte = lengte;
-            _geslacht = geslacht; 
+            Id = idSporter;
+            NaamSporter = naamSporter;
+            VoornaamSporter = voornaamSporter;
+            MailSporter = mailSporter;
+            Wachtwoord = wachtwoord;
+            GeboortedatumSporter = geboortedatumSporter;
+            Lengte = lengte;
+            Geslacht = geslacht; 
         }
 
         // Constructor zonder ID (bijv. voor nieuwe objecten)
         public Sporter(string naamSporter, string voornaamSporter, string mailSporter,string wachtwoord, DateTime geboortedatumSporter,string geslacht, double lengte)
         {
-            _idSporter = 0; // Default ID
-            _naamSporter = naamSporter;
-            _voornaamSporter = voornaamSporter;
-            _mailSporter = mailSporter;
-            _wachtwoord = wachtwoord;
-            _geboortedatumSporter = geboortedatumSporter;
-            _lengte = lengte;
-            _geslacht = geslacht;
+            Id = 0; // Default ID
+            NaamSporter = naamSporter;
+            VoornaamSporter = voornaamSporter;
+            MailSporter = mailSporter;
+            Wachtwoord = wachtwoord;
+            GeboortedatumSporter = geboortedatumSporter;
+            Lengte = lengte;
+            Geslacht = geslacht;
         }
 
         // ToString methode
         public override string ToString()
         {
-            return $"{_idSporter}: {_voornaamSporter} {_naamSporter}";
+            return $"{Id}: {VoornaamSporter} {NaamSporter}";
         }
     }
    }

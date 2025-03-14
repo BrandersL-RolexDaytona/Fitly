@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Fitly_Domain.Business.Sporter>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NaamSporter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoornaamSporter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MailSporter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wachtwoord)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeboortedatumSporter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lengte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Geslacht)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaamSporter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoornaamSporter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MailSporter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wachtwoord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeboortedatumSporter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lengte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Geslacht)
+            </td>
+            <td>
+                <a asp-action="CreateEditSporter" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="/" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

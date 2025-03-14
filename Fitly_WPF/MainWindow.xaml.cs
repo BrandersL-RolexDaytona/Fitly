@@ -30,7 +30,8 @@ namespace Fitly_WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int getWorkout = 3; 
+            int getWorkout = 0;
+            
             cmbWorkout.SelectedItem = getWorkout;
             dtgOefeningen.ItemsSource = _controller.GetOefeningsFromDB(getWorkout);
             

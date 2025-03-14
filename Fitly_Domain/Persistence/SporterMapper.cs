@@ -52,11 +52,41 @@ namespace Fitly_Domain.Persistence
             }
             catch (Exception ex)
             {
-                throw new Exception("Error fetching sporters from the database", ex);
+                throw new Exception("Fout", ex);
             }
 
             return returnList;
         }
+        public void AddSporterToDB(Sporter newSporter)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string command = "INSERT INTO fitly.sporter (Naam, Voornaam, Email, Wachtwoord, Geboortedatum, Geslacht, Lengte) " +
+                        "VALUES (@Naam, @Voornaam, @Email, @Wachtwoord, @Geboortedatum, @Geslacht, @Lengte)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(command, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Naam", newSporter.NaamSporter);
+                        cmd.Parameters.AddWithValue("@Voornaam", newSporter.VoornaamSporter);
+                        cmd.Parameters.AddWithValue("@Email", newSporter.MailSporter);
+                        cmd.Parameters.AddWithValue("@Wachtwoord", newSporter.Wachtwoord);
+                        cmd.Parameters.AddWithValue("@Geboortedatum", newSporter.GeboortedatumSporter);
+                        cmd.Parameters.AddWithValue("@Geslacht", newSporter.Geslacht);
+                        cmd.Parameters.AddWithValue("@Lengte", newSporter.Lengte);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fout", ex);
+            }
+        }
+
 
     }
 }

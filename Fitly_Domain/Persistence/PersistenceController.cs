@@ -34,5 +34,10 @@ namespace Fitly_Domain.Persistence
             OefeningMapper mapper = new OefeningMapper();
             return mapper.GetOefeningenByWorkout(workoutId);
         }
+        public void AddSporter(Sporter sporters)
+        {
+            SporterMapper mapper = new SporterMapper();
+            mapper.AddSporterToDB(sporters);
+        }
     }
 }
