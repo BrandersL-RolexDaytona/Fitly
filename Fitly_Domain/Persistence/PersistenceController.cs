@@ -39,5 +39,10 @@ namespace Fitly_Domain.Persistence
             SporterMapper mapper = new SporterMapper();
             mapper.AddSporterToDB(sporters);
         }
+        public void DeleteSporter(Sporter sporter)
+        {
+            SporterMapper mapper = new SporterMapper();
+            mapper.DeleteSporterFromDB(sporter.Id);
+        }
     }
 }

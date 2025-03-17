@@ -38,5 +38,10 @@ namespace Fitly_Domain.Business
 
 
         }
+        public void DeleteSporter(Sporter sporter)
+        {
+            _persistenceController = new PersistenceController();
+            _persistenceController.DeleteSporter(sporter);
+        }
     }
 }

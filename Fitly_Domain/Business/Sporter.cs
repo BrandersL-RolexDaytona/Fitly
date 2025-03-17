@@ -50,6 +50,7 @@ namespace Fitly_Domain.Business
             NaamSporter = naamSporter;
             VoornaamSporter = voornaamSporter;
             MailSporter = mailSporter;
+            
             Wachtwoord = wachtwoord;
             GeboortedatumSporter = geboortedatumSporter;
             Lengte = lengte;

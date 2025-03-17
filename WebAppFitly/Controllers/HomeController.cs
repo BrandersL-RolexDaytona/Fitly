@@ -31,6 +31,13 @@ namespace WebAppFitly.Controllers
             return View();
 
         }
+        public IActionResult DeleteSporter(Sporter sporter)
+        {
+            _controller.DeleteSporter(sporter);
+            View(_controller.GetDeelnemers());
+            return RedirectToAction("sporter");
+            
+        }
         public IActionResult CreateEditSporterForm(Sporter sporter)
         {
             _controller.AddSporter(sporter);

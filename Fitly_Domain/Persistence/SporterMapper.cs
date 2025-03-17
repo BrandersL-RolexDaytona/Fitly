@@ -88,5 +88,27 @@ namespace Fitly_Domain.Persistence
         }
 
 
+    
+    public void DeleteSporterFromDB(int sporterId)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string command = "DELETE FROM fitly.sporter WHERE IdSporter = @SporterID";
+
+                    using (MySqlCommand cmd = new MySqlCommand(command, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@SporterID", sporterId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fout bij het verwijderen van de sporter", ex);
+            }
+        }
     }
-}
+    }
