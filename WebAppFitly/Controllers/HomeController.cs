@@ -3,6 +3,9 @@ using System.Diagnostics;
 using WebAppFitly.Models;
 using Fitly_Domain;
 using Fitly_Domain.Business;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Core.Types;
 
 
 namespace WebAppFitly.Controllers
@@ -11,15 +14,25 @@ namespace WebAppFitly.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private Fitly_Domain.Business.Controller _controller;
+      
 
-        
-        
-        
+
+
+
+
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _controller = new Fitly_Domain.Business.Controller();
+        }
+        
+       
+
+        public IActionResult Index()
+        {
+            var workouts = _controller.GetWorkouts(); 
+            return View(workouts); 
         }
         public IActionResult Sporter()
         {
@@ -30,6 +43,14 @@ namespace WebAppFitly.Controllers
 
             return View();
 
+        }
+        public IActionResult Oefeningen(int workoutId)
+        {
+            // Use the GetOefeningenByWorkout method to get exercises for the selected workout
+            var oefeningen = _controller.GetOefeningsFromDB(workoutId);
+
+            // Return the exercises to the view
+            return View(oefeningen);
         }
         public IActionResult DeleteSporter(Sporter sporter)
         {
@@ -46,10 +67,7 @@ namespace WebAppFitly.Controllers
 
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         public IActionResult Privacy()
         {

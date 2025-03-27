@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Fitly_Domain.Business.Oefening>
+@{
+    ViewData["Title"] = "Oefeningen";
+}
+
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="display-4 fw-bold">Your Workout</h1>
+            <p class="lead">Here are the exercises for your selected workout:</p>
+        </div>
+    </div>
+
+    <!-- Exercise List -->
+    <div class="row mt-4">
+        <div class="col">
+            @if (Model.Any())
+            {
+                <ul class="list-group">
+                    @foreach (var oefening in Model)
+                    {
+                        <li class="list-group-item">
+                            <h5>@oefening.Naam</h5>
+                            <p>@oefening.Omschrijving</p>
+                            <p>Calories: @oefening.Calorieën</p>
+                            <p>Herhalingen: @oefening.Herhalingen</p>
+                            <p>Duur: @oefening.Duur minuten</p>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No exercises found for this workout.</p>
+            }
+        </div>
+    </div>
+</div>

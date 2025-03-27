@@ -8,14 +8,7 @@ namespace Fitly_Domain.Business
 {
     public class Oefening
     {
-        private int _idOefening;
-        private string _naam;
-        private string _omschrijving;
-        private double _calorieën;
-        private int _fkType;
-        private int _herhalingen;
-        private double _duur;
-
+        
 
         public int IdOefening { get; set; }
         public string Naam { get; set; }
@@ -27,25 +20,25 @@ namespace Fitly_Domain.Business
 
         public Oefening(int idOefening, string naam, string omschrijving, double calorieën, int fkType, int herhalingen, double duur)
         {
-            _idOefening = idOefening;
-            _naam = naam;
-            _omschrijving = omschrijving;
-            _calorieën = calorieën;
-            _fkType = fkType;
-            _herhalingen = herhalingen;
-            _duur = duur;
+            IdOefening = idOefening;
+            Naam = naam;
+            Omschrijving = omschrijving;
+            Calorieën = calorieën;
+            FKType = fkType;
+            Herhalingen = herhalingen;
+            Duur = duur;
         }
 
         // Constructor zonder ID (bijv. voor nieuwe objecten)
         public Oefening(string naam, string omschrijving, double calorieën, int fkType, int herhalingen, double duur)
         {
-            _idOefening = 0; // Default waarde, kan later aangepast worden
-            _naam = naam;
-            _omschrijving = omschrijving;
-            _calorieën = calorieën;
-            _fkType = fkType;
-            _herhalingen = herhalingen;
-            _duur = duur;
+            IdOefening = 0; // Default waarde, kan later aangepast worden
+            Naam = naam;
+            Omschrijving = omschrijving;
+            Calorieën = calorieën;
+            FKType = fkType;
+            Herhalingen = herhalingen;
+            Duur = duur;
         }
 
         public override string ToString()

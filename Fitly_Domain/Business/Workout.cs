@@ -8,8 +8,7 @@ namespace Fitly_Domain.Business
 {
     public class Workout
     {
-        private int _idWorkout;
-        private string _naamWorkout;
+       
         
         public int IdWorkout { get; set; }
         public string Naamworkout { get; set; }
@@ -18,7 +17,7 @@ namespace Fitly_Domain.Business
         public Workout(int idWorkout, string naamWorkout)
         {
             IdWorkout = idWorkout;
-            _naamWorkout = naamWorkout;
+            Naamworkout = naamWorkout;
             
             
         }
@@ -27,7 +26,7 @@ namespace Fitly_Domain.Business
 
         public override string ToString()
         {
-            return _naamWorkout;
+            return Naamworkout;
         }
     
 }

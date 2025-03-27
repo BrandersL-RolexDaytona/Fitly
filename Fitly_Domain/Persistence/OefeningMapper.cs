@@ -22,64 +22,38 @@ namespace Fitly_Domain.Persistence
             List<Oefening> returnList = new List<Oefening>();
             string query = "SELECT idOefening, Naam, Omschrijving, Calorieen, Herhalingen, Duur " +
                            "FROM fitly.oefening " +
-                           "WHERE Workout_idWorkout = @workoutId";
+                           "WHERE IdWorkout = @workoutId;";  // The query remains the same
 
             using (MySqlConnection conn = new MySqlConnection(_connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
+                // Adding the parameter for the query
                 cmd.Parameters.AddWithValue("@workoutId", workoutId);
 
                 try
                 {
-                    conn.Open();
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    conn.Open();  // Open the connection
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())  // Execute the query
                     {
                         while (reader.Read())
                         {
-                            int idOefening;
-                            string naam, omschrijving;
-                            int calorieën, herhalingen;
-                            double duur;
-                            int fkType = 1;
+                            int idOefening = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                            string naam = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                            string omschrijving = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                            int calorieën = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
+                            int herhalingen = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+                            double duur = reader.IsDBNull(5) ? 0 : reader.GetDouble(5);
 
-                            if (reader["idOefening"] != DBNull.Value)
-                                idOefening = Convert.ToInt32(reader["idOefening"]);
-                            else
-                                idOefening = 0;
-
-                            if (reader["Naam"] != DBNull.Value)
-                                naam = Convert.ToString(reader["Naam"]);
-                            else
-                                naam = string.Empty;
-
-                            if (reader["Omschrijving"] != DBNull.Value)
-                                omschrijving = Convert.ToString(reader["Omschrijving"]);
-                            else
-                                omschrijving = string.Empty;
-
-                            if (reader["Calorieen"] != DBNull.Value)
-                                calorieën = Convert.ToInt32(reader["Calorieen"]);
-                            else
-                                calorieën = 0;
-
-                            if (reader["Herhalingen"] != DBNull.Value)
-                                herhalingen = Convert.ToInt32(reader["Herhalingen"]);
-                            else
-                                herhalingen = 0;
-
-                            if (reader["Duur"] != DBNull.Value)
-                                duur = Convert.ToDouble(reader["Duur"]);
-                            else
-                                duur = 0;
-
-                            Oefening oefening = new Oefening(idOefening, naam, omschrijving, fkType, calorieën, herhalingen, duur);
+                            // Create Oefening object and add it to the list
+                            Oefening oefening = new Oefening(idOefening, naam, omschrijving, 1, calorieën, herhalingen, duur);
                             returnList.Add(oefening);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error retrieving oefeningen: " + ex.Message);
+                    Console.WriteLine("Error in oefeningen: " + ex.Message);
                 }
             }
 
