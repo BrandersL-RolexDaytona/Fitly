@@ -20,32 +20,31 @@ namespace Fitly_Domain.Persistence
         public List<Oefening> GetOefeningenByWorkout(int workoutId)
         {
             List<Oefening> returnList = new List<Oefening>();
-            string query = "SELECT idOefening, Naam, Omschrijving, Calorieen, Herhalingen, Duur " +
-                           "FROM fitly.oefening " +
-                           "WHERE IdWorkout = @workoutId;";  // The query remains the same
+            string query = "SELECT o.idOefening, o.Naam, o.Omschrijving, o.Calorieen, o.Herhalingen, o.Duur " +
+                           "FROM fitly.oefening o " +
+                           "JOIN fitly.workout_has_oefening wh ON o.idOefening = wh.FKoefening " +
+                           "WHERE wh.FKWorkout = @workoutId;";
 
             using (MySqlConnection conn = new MySqlConnection(_connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
-                // Adding the parameter for the query
                 cmd.Parameters.AddWithValue("@workoutId", workoutId);
 
                 try
                 {
-                    conn.Open();  // Open the connection
+                    conn.Open();
 
-                    using (MySqlDataReader reader = cmd.ExecuteReader())  // Execute the query
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             int idOefening = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                             string naam = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
                             string omschrijving = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                            int calorieën = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
+                            int calorieën = reader.IsDBNull(3) ? 0 : Convert.ToInt32(reader.GetString(3)); // Calorieen is LONGTEXT
                             int herhalingen = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                             double duur = reader.IsDBNull(5) ? 0 : reader.GetDouble(5);
 
-                            // Create Oefening object and add it to the list
                             Oefening oefening = new Oefening(idOefening, naam, omschrijving, 1, calorieën, herhalingen, duur);
                             returnList.Add(oefening);
                         }

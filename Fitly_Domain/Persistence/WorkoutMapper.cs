@@ -53,7 +53,7 @@ namespace Fitly_Domain.Persistence
             }
             catch (Exception ex)
             {
-                throw new Exception("Error fetching workouts from the database", ex);
+                throw new Exception("Error", ex);
             }
             finally
             {

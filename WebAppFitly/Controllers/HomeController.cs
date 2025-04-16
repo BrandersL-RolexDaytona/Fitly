@@ -46,10 +46,8 @@ namespace WebAppFitly.Controllers
         }
         public IActionResult Oefeningen(int workoutId)
         {
-            // Use the GetOefeningenByWorkout method to get exercises for the selected workout
             var oefeningen = _controller.GetOefeningsFromDB(workoutId);
 
-            // Return the exercises to the view
             return View(oefeningen);
         }
         public IActionResult DeleteSporter(Sporter sporter)
