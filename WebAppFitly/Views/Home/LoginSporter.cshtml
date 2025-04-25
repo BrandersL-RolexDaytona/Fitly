@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@model Fitly_Domain.Business.Sporter
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+</div>
+
+<form asp-action="LoginSporter" asp-controller="Home" >
+    <label class="mt-4">Email</label>
+    <input class="form-control" type="email" asp-for="MailSporter" required />
+
+    <label class="mt-4">Wachtwoord</label>
+    <input class="form-control" type="password" asp-for="Wachtwoord" required />
+
+    <button  class="btn btn-primary mt-4" type="submit">Login</button>
+
+</form>

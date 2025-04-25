@@ -39,6 +39,8 @@ namespace Fitly_Domain.Business
         { get; set; }
         public string Geslacht
         { get; set; }
+        public double TotaleCalorieën 
+        { get; set; }
         // Constructor met ID (bijv. voor bestaande databaseobjecten)
         public Sporter()
         {
@@ -55,6 +57,18 @@ namespace Fitly_Domain.Business
             GeboortedatumSporter = geboortedatumSporter;
             Lengte = lengte;
             Geslacht = geslacht; 
+        }
+        public Sporter(int idSporter, string naamSporter, string voornaamSporter, string mailSporter, string wachtwoord, DateTime geboortedatumSporter, string geslacht, double lengte,double totaleCalorieën)
+        {
+            Id = idSporter;
+            NaamSporter = naamSporter;
+            VoornaamSporter = voornaamSporter;
+            MailSporter = mailSporter;
+            TotaleCalorieën = totaleCalorieën;
+            Wachtwoord = wachtwoord;
+            GeboortedatumSporter = geboortedatumSporter;
+            Lengte = lengte;
+            Geslacht = geslacht;
         }
 
         // Constructor zonder ID (bijv. voor nieuwe objecten)

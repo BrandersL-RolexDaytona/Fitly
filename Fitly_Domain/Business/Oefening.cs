@@ -18,6 +18,10 @@ namespace Fitly_Domain.Business
         public int Herhalingen { get; set; }  
         public double Duur {  get; set; }
 
+
+        public Oefening()
+        {
+        }
         public Oefening(int idOefening, string naam, string omschrijving, double calorieën, int fkType, int herhalingen, double duur)
         {
             IdOefening = idOefening;

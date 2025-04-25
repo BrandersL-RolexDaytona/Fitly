@@ -37,13 +37,13 @@
 
 @section Scripts {
     <script>
-        // Listen for changes to the workout selection dropdown
+       
         document.getElementById('workoutSelect').addEventListener('change', function() {
-            var workoutId = this.value; // Get the selected workout ID
+            var workoutId = this.value; 
             var startButton = document.getElementById('startWorkoutButton');
 
-            // Enable the Start Workout button if a valid workout is selected
-            startButton.disabled = !workoutId; // Disable the button if no workout is selected
+            
+            startButton.disabled = !workoutId; 
         });
     </script>
 }

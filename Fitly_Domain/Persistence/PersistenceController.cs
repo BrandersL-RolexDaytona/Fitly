@@ -44,5 +44,25 @@ namespace Fitly_Domain.Persistence
             SporterMapper mapper = new SporterMapper();
             mapper.DeleteSporterFromDB(sporter.Id);
         }
+        public Sporter GetSporterById(int id)
+        {
+            SporterMapper mapper = new SporterMapper();
+            return mapper.GetSporterById(id);
+        }
+        public void UpdatedSporter(Sporter sporter)
+        {
+            SporterMapper mapper = new SporterMapper();
+            mapper.UpdateSporter(sporter);
+        }
+        public List<Oefening> GetOefeningsById(List<int> OefeningenId)
+        {
+            OefeningMapper mapper = new OefeningMapper();
+            return mapper.GetOefeningenByIds(OefeningenId);
+        }
+        public double VoegCalorieënToeAanSporter(Sporter sporter, List<Oefening> oefeningen)
+        {
+            SporterMapper sporterMapper = new SporterMapper();
+            return sporterMapper.VoegCalorieënToeAanSporter(sporter, oefeningen);
+        }
     }
 }

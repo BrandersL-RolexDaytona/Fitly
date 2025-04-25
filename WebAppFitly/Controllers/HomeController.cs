@@ -6,6 +6,7 @@ using Fitly_Domain.Business;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
+using System.Linq;
 
 
 namespace WebAppFitly.Controllers
@@ -14,12 +15,15 @@ namespace WebAppFitly.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private Fitly_Domain.Business.Controller _controller;
-      
 
 
 
 
 
+        public IActionResult LoginSporter()
+        {
+            return View();
+        }
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -38,11 +42,21 @@ namespace WebAppFitly.Controllers
         {
             return View(_controller.GetDeelnemers());
         }
-        public IActionResult CreateEditSporter()
+        
+        
+        public IActionResult EditSporter(int id)
         {
+            
+            var sporter = _controller.GetSporterById(id);
+            return View("EditSporter", sporter);
+        }
 
-            return View();
-
+        [HttpPost]
+        public IActionResult EditSporter(Sporter model)
+        {
+            
+            _controller.UpdatedSporter(model); 
+            return RedirectToAction("Index");
         }
         public IActionResult Oefeningen(int workoutId)
         {
@@ -77,5 +91,37 @@ namespace WebAppFitly.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult GekozenOefeningen(List<int> gekozenOefeningen)
+        {
+            if (gekozenOefeningen == null || !gekozenOefeningen.Any())
+            {
+                return View(new List<Oefening>());
+            }
+
+            List<Oefening> oefeningen = _controller.GetOefeningsById(gekozenOefeningen);
+            return View(oefeningen);
+        }
+
+
+        [HttpPost]
+        public IActionResult SlaCalorieënOp(List<Oefening> oefeningen)
+        {
+            // int? sporterId = HttpContext.Session.GetInt32("SporterId");
+            int sporterId = 2;
+
+            // Controleer of sporter gevonden is
+            Sporter sporter = _controller.GetSporterById(sporterId);
+            if (sporter == null) return NotFound();
+
+            // Voeg calorieën toe
+            _controller.VoegCalorieënToeAanSporter(sporter, oefeningen);
+
+            _controller.UpdatedSporter(sporter);
+            // Redirect naar de homepagina
+            return RedirectToAction("Index");
+
+        }
+
     }
 }

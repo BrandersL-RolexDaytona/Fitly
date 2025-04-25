@@ -1,0 +1,31 @@
+﻿@model List<Fitly_Domain.Business.Oefening>
+@{
+    ViewData["Title"] = "Gekozen Oefeningen";
+}
+
+<form asp-controller="Home" asp-action="SlaCalorieënOp" method="post">
+    @if (Model == null || !Model.Any())
+    {
+        <p class="text-danger">Geen oefeningen geselecteerd of model is leeg.</p>
+    }
+    else
+    {
+        for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="card mb-4 p-3">
+                <h3>@Model[i].Naam</h3>
+                <input type="hidden" name="Oefeningen[@i].Naam" value="@Model[i].Naam" />
+                <input type="hidden" name="Oefeningen[@i].Calorieën" value="@Model[i].Calorieën" />
+                
+
+                <p><strong>Beschrijving:</strong> @Model[i].Omschrijving</p>
+                <p><strong>Calorieën per minuut:</strong> @Model[i].Calorieën</p>
+
+                <label>Hoe lang wil je deze oefening doen? (in minuten)</label>
+                <input type="number" name="Oefeningen[@i].Duur" class="form-control w-25 tijdInput" min="1" required />
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary mt-3">Klaar</button>
+    }
+</form>

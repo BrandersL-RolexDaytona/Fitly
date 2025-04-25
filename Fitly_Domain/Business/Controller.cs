@@ -43,5 +43,26 @@ namespace Fitly_Domain.Business
             _persistenceController = new PersistenceController();
             _persistenceController.DeleteSporter(sporter);
         }
+        public Sporter GetSporterById(int id)
+        {
+            _persistenceController = new PersistenceController();
+            return _persistenceController.GetSporterById(id);
+        }
+        public void UpdatedSporter(Sporter sporter)
+        {
+            _persistenceController = new PersistenceController();
+            _persistenceController.UpdatedSporter(sporter);
+        }
+        public List<Oefening> GetOefeningsById(List<int> OefeningenId)
+        {
+            _persistenceController = new PersistenceController();
+
+            return _persistenceController.GetOefeningsById(OefeningenId);
+        }
+        public double VoegCalorieënToeAanSporter(Sporter sporter, List<Oefening> oefeningen)
+        {
+            _persistenceController = new PersistenceController();
+            return _persistenceController.VoegCalorieënToeAanSporter(sporter, oefeningen);
+        }
     }
 }
