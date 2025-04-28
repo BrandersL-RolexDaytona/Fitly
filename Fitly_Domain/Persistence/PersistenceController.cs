@@ -64,5 +64,11 @@ namespace Fitly_Domain.Persistence
             SporterMapper sporterMapper = new SporterMapper();
             return sporterMapper.VoegCalorieënToeAanSporter(sporter, oefeningen);
         }
+        public Sporter GetSporterByEmailAndPassword(string email, string wachtwoord)
+        {
+            SporterMapper sporterMapper = new SporterMapper();
+            return sporterMapper.GetSporterByEmailAndPassword(email,wachtwoord);
+        }
+
     }
 }

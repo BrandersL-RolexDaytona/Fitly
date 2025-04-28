@@ -174,7 +174,7 @@ namespace Fitly_Domain.Persistence
                                    Lengte = @Lengte,
                                    TotaleCalorieën = @TotaleCalorieën
                                WHERE IdSporter = @Id";
-                    
+
 
 
                     using (MySqlCommand cmd = new MySqlCommand(command, conn))
@@ -188,7 +188,7 @@ namespace Fitly_Domain.Persistence
                         cmd.Parameters.AddWithValue("@Lengte", updatedSporter.Lengte);
                         cmd.Parameters.AddWithValue("@Id", updatedSporter.Id);
                         cmd.Parameters.AddWithValue("@TotaleCalorieën", updatedSporter.TotaleCalorieën);
-                        
+
 
                         cmd.ExecuteNonQuery();
                     }
@@ -212,8 +212,8 @@ namespace Fitly_Domain.Persistence
 
             return totaalCalorieën;
         }
-    
-    public void UpdateCalorieënVanSporter(int sporterId, double nieuweCalorieën)
+
+        public void UpdateCalorieënVanSporter(int sporterId, double nieuweCalorieën)
         {
             try
             {
@@ -238,8 +238,51 @@ namespace Fitly_Domain.Persistence
                 throw new Exception("Fout bij het bijwerken van de calorieën van de sporter", ex);
             }
         }
+    
+    public Sporter GetSporterByEmailAndPassword(string email, string wachtwoord)
+        {
+            Sporter sporter = null;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string command = "SELECT * FROM fitly.sporter WHERE Email = @Email AND Wachtwoord = @Wachtwoord";
+                    using (MySqlCommand cmd = new MySqlCommand(command, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        cmd.Parameters.AddWithValue("@Wachtwoord", wachtwoord);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int sporterId = Convert.ToInt32(reader["idSporter"]);
+                                string naam = reader["Naam"].ToString();
+                                string voornaam = reader["Voornaam"].ToString();
+                                string emailAdres = reader["Email"].ToString();
+                                string wachtwoordDb = reader["Wachtwoord"].ToString();
+                                DateTime geboortedatum = Convert.ToDateTime(reader["Geboortedatum"]);
+                                string geslacht = reader["Geslacht"].ToString();
+                                double lengte = Convert.ToDouble(reader["Lengte"]);
+                                double totaleCalorieën = reader["TotaleCalorieën"] != DBNull.Value ? Convert.ToDouble(reader["TotaleCalorieën"]) : 0.0;
+
+                                sporter = new Sporter(sporterId, naam, voornaam, emailAdres, wachtwoordDb, geboortedatum, geslacht, lengte, totaleCalorieën);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fout bij het ophalen van de sporter via email en wachtwoord", ex);
+            }
+
+            return sporter;
+        }
     }
-}
+    }
 
 
 

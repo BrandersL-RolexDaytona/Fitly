@@ -64,5 +64,11 @@ namespace Fitly_Domain.Business
             _persistenceController = new PersistenceController();
             return _persistenceController.VoegCalorieënToeAanSporter(sporter, oefeningen);
         }
+        public Sporter GetSporterByEmailAndPassword(string email, string wachtwoord)
+        {
+            _persistenceController = new PersistenceController();
+
+            return _persistenceController.GetSporterByEmailAndPassword(email, wachtwoord);
+        }
     }
 }

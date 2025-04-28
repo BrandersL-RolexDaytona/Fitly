@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Fitly_Domain.Business.Workout>
+@{
+    ViewData["Title"] = "Fitly";
+}
+
+<div class="container text-center mt-5">
+    <!-- Welcome Section -->
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold">Welkom!</h1>
+            <p class="lead">....</p>
+        </div>
+    </div>
+
+    <!-- Workout Selection -->
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Select Your Workout</h3>
+            <form id="workoutForm" method="post" asp-action="Oefeningen">
+                <select id="workoutSelect" class="form-select" name="workoutId" required>
+                    <option value="">Select a workout</option>
+                    @foreach (var workout in Model)
+                    {
+                        <option value="@workout.IdWorkout">@workout.Naamworkout</option>
+                    }
+                </select>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg" id="startWorkoutButton" disabled>
+                        Start Workout
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        document.getElementById('workoutSelect').addEventListener('change', function() {
+            var workoutId = this.value;
+            var startButton = document.getElementById('startWorkoutButton');
+
+
+            startButton.disabled = !workoutId;
+        });
+    </script>
+}

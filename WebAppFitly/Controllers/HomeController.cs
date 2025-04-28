@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using System.Linq;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+
+
+
 
 
 namespace WebAppFitly.Controllers
@@ -16,9 +20,7 @@ namespace WebAppFitly.Controllers
         private readonly ILogger<HomeController> _logger;
         private Fitly_Domain.Business.Controller _controller;
 
-
-
-
+       
 
         public IActionResult LoginSporter()
         {
@@ -30,9 +32,12 @@ namespace WebAppFitly.Controllers
             _logger = logger;
             _controller = new Fitly_Domain.Business.Controller();
         }
-        
-       
 
+
+        public IActionResult Welcome()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             var workouts = _controller.GetWorkouts(); 
@@ -78,8 +83,14 @@ namespace WebAppFitly.Controllers
             return RedirectToAction("index");
 
         }
+        public IActionResult CreateEditSporter(Sporter sporter)
+        {
+            return View(sporter);
+           
 
-       
+        }
+
+
 
         public IActionResult Privacy()
         {
@@ -123,5 +134,29 @@ namespace WebAppFitly.Controllers
 
         }
 
+        public IActionResult Login(Sporter model)
+        {
+            
+                Sporter sporter = _controller.GetSporterByEmailAndPassword(model.MailSporter, model.Wachtwoord);
+
+                if (sporter != null)
+                {
+                    
+                    HttpContext.Session.SetInt32("SporterId", sporter.Id);
+                    HttpContext.Session.SetString("SporterNaam", sporter.NaamSporter);
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Login fout
+                    ModelState.AddModelError(string.Empty, "Email of wachtwoord is ongeldig.");
+                    return RedirectToAction("LoginSporter");
+
+
+                }
+               
+
+        }
     }
 }

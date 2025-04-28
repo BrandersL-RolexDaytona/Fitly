@@ -1,49 +1,61 @@
-﻿@model IEnumerable<Fitly_Domain.Business.Workout>
+﻿
 @{
-    ViewData["Title"] = "Fitly";
+    ViewData["Title"] = "Welkom bij Fitly";
 }
 
-<div class="container text-center mt-5">
-    <!-- Welcome Section -->
-    <div class="row align-items-center">
-        <div class="col-md-6">
-            <h1 class="display-4 fw-bold">Welkom!</h1>
-            <p class="lead">....</p>
-        </div>
-    </div>
+<div class="min-h-screen flex flex-col items-center justify-between bg-gradient-to-br from-green-400 to-blue-500 p-6">
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl shadow-2xl p-10 max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 items-center">
 
-    <!-- Workout Selection -->
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <h3>Select Your Workout</h3>
-            <form id="workoutForm" method="post" asp-action="Oefeningen">
-                <select id="workoutSelect" class="form-select" name="workoutId" required>
-                    <option value="">Select a workout</option>
-                    @foreach (var workout in Model)
-                    {
-                        <option value="@workout.IdWorkout">@workout.Naamworkout</option>
-                    }
-                </select>
+        <!-- Text Section -->
+        <div class="text-center md:text-left">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">Welkom bij <span class="text-blue-500">Fitly</span></h1>
+            <p class="text-lg text-gray-600 mb-8">
+                Start vandaag nog met jouw fitnessreis. Volg je trainingen, stel doelen en word lid van onze community!
+            </p>
 
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg" id="startWorkoutButton" disabled>
-                        Start Workout
-                    </button>
+            <!-- Feature List -->
+            <div class="space-y-4 mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="text-3xl">🏋️‍♂️</div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700">Trainingen bijhouden</h2>
+                        <p class="text-gray-500 text-sm">Eenvoudig je vooruitgang monitoren.</p>
+                    </div>
                 </div>
-            </form>
+                <div class="flex items-center gap-3">
+                    <div class="text-3xl">🎯</div>
+
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-3xl">🤝</div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-700">Community</h2>
+                        <p class="text-gray-500 text-sm">Samen sterker met gelijkgestemden.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a asp-controller="Home" asp-action="LoginSporter" class="border border-blue-500 hover:bg-blue-50 text-blue-500 font-semibold py-3 px-6 rounded-lg text-lg text-center">
+                    Inloggen
+                </a>
+                <a asp-controller="Home" asp-action="CreateEditSporter" class="border border-blue-500 hover:bg-blue-50 text-blue-500 font-semibold py-3 px-6 rounded-lg text-lg text-center">
+                    Registreren
+                </a>
+            </div>
         </div>
+
+        <!-- Image Section -->
+        <div class="hidden md:block">
+            <img src="~/Images/Fitness.jpg" alt="Fitness afbeelding" class="rounded-xl shadow-lg w-full object-cover h-96" />
+        </div>
+
     </div>
+
+    <!-- Footer -->
+    <footer class="text-white mt-10 text-sm text-center">
+        &copy; @DateTime.Now.Year Fitly. Alle rechten voorbehouden.
+    </footer>
 </div>
-
-@section Scripts {
-    <script>
-       
-        document.getElementById('workoutSelect').addEventListener('change', function() {
-            var workoutId = this.value; 
-            var startButton = document.getElementById('startWorkoutButton');
-
-            
-            startButton.disabled = !workoutId; 
-        });
-    </script>
-}
