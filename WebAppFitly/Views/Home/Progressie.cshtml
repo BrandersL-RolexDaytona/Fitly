@@ -1,0 +1,27 @@
+﻿@model Fitly_Domain.Business.Sporter
+
+@{
+    ViewData["Title"] = "Jouw Progressie";
+
+    int maxCalorieën = 1000; // Simpele visuele limiet
+    double percentage = Model.TotaleCalorieën * 100.0 / maxCalorieën;
+    if (percentage > 100) percentage = 100;
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <h2 class="card-title text-center mb-4">Progressie van @Model.NaamSporter</h2>
+
+            <div class="text-center mb-3">
+                <h4 class="text-primary">Totaal Verbrande Calorieën</h4>
+                <p class="display-6 fw-bold">@Model.TotaleCalorieën kcal</p>
+            </div>
+
+            
+            <div class="text-center">
+                <a class="btn btn-outline-primary" asp-controller="Home" asp-action="Workout">Terug naar Workout</a>
+            </div>
+        </div>
+    </div>
+</div>

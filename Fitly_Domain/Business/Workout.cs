@@ -21,6 +21,8 @@ namespace Fitly_Domain.Business
             
             
         }
+        public Workout() 
+        { }
 
         
 

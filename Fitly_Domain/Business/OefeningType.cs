@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 
 namespace Fitly_Domain.Business
 {
-    internal class Type
+    public class OefeningType
     {
-
         public int IdType { get; set; }
         public string Spieren { get; set; }
 
-        // Constructor met ID (bijvoorbeeld uit database)
-        public Type(int idType, string spieren)
+        public OefeningType(int idType, string spieren)
         {
             IdType = idType;
             Spieren = spieren;
         }
 
-        // Constructor zonder ID (voor nieuwe objecten)
-        public Type(string spieren)
+        public OefeningType(string spieren)
         {
-            IdType = 0; // Default waarde
+            IdType = 0;
             Spieren = spieren;
+        }
+        public OefeningType()
+        {
+            
         }
 
         public override string ToString()
@@ -31,4 +32,5 @@ namespace Fitly_Domain.Business
             return $"{IdType}: {Spieren}";
         }
     }
+
 }

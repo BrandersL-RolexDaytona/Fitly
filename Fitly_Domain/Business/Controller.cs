@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Fitly_Domain.Persistence.TypeMapper;
 
 namespace Fitly_Domain.Business
 {
@@ -69,6 +70,40 @@ namespace Fitly_Domain.Business
             _persistenceController = new PersistenceController();
 
             return _persistenceController.GetSporterByEmailAndPassword(email, wachtwoord);
+        }
+        public void AddWorkoutToDB(Workout newWorkout)
+        {
+            _persistenceController = new PersistenceController();
+            _persistenceController.AddWorkoutToDB(newWorkout);
+        }
+        public int AddOefeningToDB(Oefening oef)
+        {
+            _persistenceController = new PersistenceController();
+
+            return _persistenceController.AddOefeningToDB(oef);
+        }
+        public List<OefeningType> GetAllTypes()
+        {
+            _persistenceController = new PersistenceController();
+            return _persistenceController.GetAllTypes();
+        }
+        public List<Oefening> GetAllOefeningen()
+        {
+            _persistenceController = new PersistenceController();
+
+            return _persistenceController.GetAllOefeningen();
+        }
+        public void VerwijderOefening(int oefeningId)
+        {
+            _persistenceController = new PersistenceController();
+
+            _persistenceController.VerwijderOefening(oefeningId);
+
+        }
+        public void VerwijderWorkout(int workoutId)
+        {
+            WorkoutMapper workoutMapper = new WorkoutMapper();
+            workoutMapper.VerwijderWorkout(workoutId);
         }
     }
 }

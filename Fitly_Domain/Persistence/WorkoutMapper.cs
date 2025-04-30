@@ -62,5 +62,39 @@ namespace Fitly_Domain.Persistence
 
             return returnList;
         }
+        public void AddWorkoutToDB(Workout newWorkout)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string command = "INSERT INTO fitly.workout (NaamWorkout) VALUES (@NaamWorkout)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(command, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@NaamWorkout", newWorkout.Naamworkout);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fout bij toevoegen van workout aan de database.", ex);
+            }
+        }
+        public void VerwijderWorkout(int id)
+        {
+            string query = "DELETE FROM workout WHERE idWorkout = @id";
+
+            using (var conn = new MySqlConnection(_connectionString))
+            using (var cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

@@ -33,10 +33,10 @@ namespace Fitly_Domain.Business
             Duur = duur;
         }
 
-        // Constructor zonder ID (bijv. voor nieuwe objecten)
+       
         public Oefening(string naam, string omschrijving, double calorieën, int fkType, int herhalingen, double duur)
         {
-            IdOefening = 0; // Default waarde, kan later aangepast worden
+            IdOefening = 0; 
             Naam = naam;
             Omschrijving = omschrijving;
             Calorieën = calorieën;

@@ -41,7 +41,7 @@ namespace Fitly_Domain.Business
         { get; set; }
         public double TotaleCalorieën 
         { get; set; }
-        // Constructor met ID (bijv. voor bestaande databaseobjecten)
+     
         public Sporter()
         {
 
@@ -71,10 +71,10 @@ namespace Fitly_Domain.Business
             Geslacht = geslacht;
         }
 
-        // Constructor zonder ID (bijv. voor nieuwe objecten)
+       
         public Sporter(string naamSporter, string voornaamSporter, string mailSporter,string wachtwoord, DateTime geboortedatumSporter,string geslacht, double lengte)
         {
-            Id = 0; // Default ID
+            Id = 0;
             NaamSporter = naamSporter;
             VoornaamSporter = voornaamSporter;
             MailSporter = mailSporter;
@@ -84,7 +84,6 @@ namespace Fitly_Domain.Business
             Geslacht = geslacht;
         }
 
-        // ToString methode
         public override string ToString()
         {
             return $"{Id}: {VoornaamSporter} {NaamSporter}";

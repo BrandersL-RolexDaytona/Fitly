@@ -1,0 +1,123 @@
+﻿@model BeheerWorkoutsViewModel
+
+@{
+    ViewData["Title"] = "Beheer Workouts";
+}
+
+<div class="container mt-5">
+    <div class="row">
+    
+        <div class="col-md-6">
+            <h2>Nieuwe Workout Toevoegen</h2>
+            <form asp-action="VoegWorkoutToe" method="post">
+                <div class="form-group">
+                    <label for="workoutNaam">Workout Naam</label>
+                    <input type="text" class="form-control" id="workoutNaam" name="workoutNaam" required />
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Toevoegen</button>
+            </form>
+        </div>
+
+        <h2>Nieuwe Oefening Toevoegen</h2>
+        <form asp-action="VoegOefeningToe" method="post">
+            <div class="form-group">
+                <label for="workoutId">Selecteer Workout</label>
+                <select class="form-control" id="workoutId" name="workoutId" required>
+                    <option value="">-- Selecteer Workout --</option>
+                    @foreach (var workout in Model.Workouts)
+                    {
+                        <option value="@workout.IdWorkout">@workout.Naamworkout</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="Naam">Naam</label>
+                <input type="text" class="form-control" name="Naam" required />
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="Omschrijving">Omschrijving</label>
+                <input type="text" class="form-control" name="Omschrijving" />
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="Calorieën">Calorieën per minuut</label>
+                <input type="number" class="form-control" name="Calorieën" required />
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="FkType">Type</label>
+                <select class="form-control" name="FkType" required>
+                    <option value="">-- Selecteer Type --</option>
+                    @foreach (var type in Model.OefeningTypes)
+                    {
+                        <option value="@type.IdType">@type.Spieren</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group mt-2">
+                <label for="Herhalingen">Herhalingen</label>
+                <input type="number" class="form-control" name="Herhalingen" />
+            </div>
+
+            
+
+            <button type="submit" class="btn btn-success mt-3">Oefening Toevoegen</button>
+        </form>
+        </div>
+    </div>
+<form asp-action="VerwijderWorkout" method="post" onsubmit="return prepareWorkoutDelete();">
+    <div class="form-group d-flex align-items-end justify-content-between">
+        <div class="flex-grow-1 me-2">
+            <label for="workoutId">Selecteer Workout</label>
+            <select class="form-control" id="workoutId" name="workoutId" required>
+                <option value="">-- Selecteer Workout --</option>
+                @foreach (var workout in Model.Workouts)
+                {
+                    <option value="@workout.IdWorkout">@workout.Naamworkout</option>
+                }
+            </select>
+        </div>
+
+        <input type="hidden" name="workoutId" value="" id="selectedWorkoutId" />
+        <button type="submit" class="btn btn-danger">Verwijder</button>
+    </div>
+</form>
+
+
+
+
+
+
+<div class="form-group d-flex align-items-end justify-content-between mt-2">
+    <div class="flex-grow-1 me-2">
+        <label for="selectedOefeningId">Selecteer Oefening</label>
+        <select class="form-control" id="selectedOefeningId" required>
+            <option value="">-- Selecteer Oefening --</option>
+            @foreach (var oef in Model.Oefenings)
+            {
+                <option value="@oef.IdOefening">@oef.Naam</option>
+            }
+        </select>
+    </div>
+
+    <form asp-action="VerwijderOefening" method="post" id="deleteForm" onsubmit="return confirmDelete();">
+        <input type="hidden" name="oefeningId" value="" id="hiddenOefeningId" />
+        <button type="submit" class="btn btn-danger">Verwijder</button>
+    </form>
+</div>
+
+<script>
+    function confirmDelete() {
+        const selectedId = document.getElementById('selectedOefeningId').value;
+        if (!selectedId) {
+            alert("Selecteer een oefening om te verwijderen.");
+            return false;
+        }
+        document.getElementById('hiddenOefeningId').value = selectedId;
+        return confirm('Weet je zeker dat je deze oefening wilt verwijderen?');
+    }
+</script>
+
+

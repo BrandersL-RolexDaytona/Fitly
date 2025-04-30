@@ -32,7 +32,7 @@ namespace Fitly_Domain.Persistence
                 using (MySqlConnection conn = new MySqlConnection(_connectionString))
                 {
                     conn.Open();
-                    string command = "SELECT * FROM fitly.sporter";  // Include Wachtwoord in the query
+                    string command = "SELECT * FROM fitly.sporter"; 
                     using (MySqlCommand cmd = new MySqlCommand(command, conn))
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -49,7 +49,6 @@ namespace Fitly_Domain.Persistence
                             double lengte = reader["Lengte"] != DBNull.Value ? Convert.ToDouble(reader["Lengte"]) : 0.0;
                             double totaleCalorieën = reader["TotaleCalorieën"] != DBNull.Value ? Convert.ToDouble(reader["TotaleCalorieën"]) : 0.0;
 
-                            // Add Wachtwoord to the Sporter object
                             returnList.Add(new Sporter(id, naam, voornaam, email, wachtwoord, geboortedatum, geslacht, lengte, totaleCalorieën));
                         }
                     }

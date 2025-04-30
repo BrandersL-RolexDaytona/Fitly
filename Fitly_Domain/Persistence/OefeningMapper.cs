@@ -68,7 +68,7 @@ namespace Fitly_Domain.Persistence
             if (ids == null || ids.Count == 0)
                 return result;
 
-            // Create a list of placeholders for the IN clause
+       
             string placeholders = string.Join(",", ids.Select(_ => "?"));
 
             string query = $"SELECT idOefening, Naam, Omschrijving, Calorieen, FkType, Herhalingen, Duur " +
@@ -77,7 +77,7 @@ namespace Fitly_Domain.Persistence
             using (MySqlConnection conn = new MySqlConnection(_connectionString))
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
-                // Add parameters corresponding to each placeholder
+             
                 foreach (var id in ids)
                 {
                     cmd.Parameters.AddWithValue(null, id);
@@ -93,7 +93,7 @@ namespace Fitly_Domain.Persistence
                             int idOefening = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                             string naam = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
                             string omschrijving = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                            int calorieën = reader.IsDBNull(3) ? 0 : Convert.ToInt32(reader.GetString(3)); // Calorieen is LONGTEXT
+                            int calorieën = reader.IsDBNull(3) ? 0 : Convert.ToInt32(reader.GetString(3)); 
                             int fkType = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                             int herhalingen = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                             double duur = reader.IsDBNull(6) ? 0 : reader.GetDouble(6);
@@ -111,6 +111,103 @@ namespace Fitly_Domain.Persistence
 
             return result;
         }
+        public int AddOefeningToDB(Oefening oef)
+        {
+            int newId = 0;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string query = "INSERT INTO fitly.oefening (Naam, Omschrijving, Calorieen, fkType, Herhalingen, Duur) " +
+                                   "VALUES (@Naam, @Omschrijving, @Calorieen, @FkType, @Herhalingen, @Duur); " +
+                                   "SELECT LAST_INSERT_ID();";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Naam", oef.Naam);
+                        cmd.Parameters.AddWithValue("@Omschrijving", oef.Omschrijving ?? "");
+                        cmd.Parameters.AddWithValue("@Calorieen", oef.Calorieën);
+                        cmd.Parameters.AddWithValue("@fkType", oef.FKType);
+                        cmd.Parameters.AddWithValue("@Herhalingen", oef.Herhalingen);
+                        cmd.Parameters.AddWithValue("@Duur", oef.Duur);
+
+                        newId = Convert.ToInt32(cmd.ExecuteScalar());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Fout bij toevoegen van oefening.", ex);
+            }
+
+            return newId;
+        }
+        public List<Oefening> GetAlleOefeningen()
+        {
+            List<Oefening> result = new List<Oefening>();
+
+            string query = "SELECT idOefening, Naam, Omschrijving, Calorieen, FkType, Herhalingen, Duur FROM fitly.oefening";
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                try
+                {
+                    conn.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int idOefening = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
+                            string naam = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+                            string omschrijving = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+
+                            
+                            int calorieen = 0;
+                            if (!reader.IsDBNull(3))
+                            {
+                                string calorieText = reader.GetString(3);
+                                int.TryParse(calorieText, out calorieen);
+                            }
+
+                            int fkType = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+                            int herhalingen = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+                            double duur = reader.IsDBNull(6) ? 0 : reader.GetDouble(6);
+
+                            result.Add(new Oefening(idOefening, naam, omschrijving, calorieen, fkType, herhalingen, duur));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Fout bij het ophalen van oefeningen: " + ex.Message);
+                }
+            }
+
+            return result;
+        }
+        public void VerwijderOefening(int oefeningId)
+        {
+            string query = "DELETE FROM fitly.oefening WHERE idOefening = @id";
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@id", oefeningId);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Fout bij verwijderen van oefening: " + ex.Message);
+                }
+            }
+        }
+
     }
 }
 

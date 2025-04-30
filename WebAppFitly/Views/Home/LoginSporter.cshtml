@@ -13,6 +13,7 @@
 
     <label class="mt-4">Wachtwoord</label>
     <input class="form-control" type="password" asp-for="Wachtwoord" required />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <button  class="btn btn-primary mt-4" type="submit">Login</button>
 
