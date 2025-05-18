@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Jouw Progressie";
 
-    int maxCalorieën = 1000; // Simpele visuele limiet
+    int maxCalorieën = 1000; 
     double percentage = Model.TotaleCalorieën * 100.0 / maxCalorieën;
     if (percentage > 100) percentage = 100;
 }

@@ -3,37 +3,38 @@
     ViewData["Title"] = "Fitly";
 }
 
-<div class="container text-center mt-5">
-    <!-- Welcome Section -->
-    <div class="row align-items-center">
-        <div class="col-md-6">
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
+  
+    <div class="row w-100 mb-5">
+        <div class="col-md-8 offset-md-2">
             <h1 class="display-4 fw-bold">Welkom!</h1>
-            <p class="lead">....</p>
+            <p class="lead">Kies hieronder een workout en begin met trainen!</p>
         </div>
     </div>
 
-    <!-- Workout Selection -->
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <h3>Select Your Workout</h3>
-            <form id="workoutForm" method="post" asp-action="Oefeningen">
-                <select id="workoutSelect" class="form-select" name="workoutId" required>
-                    <option value="">Select a workout</option>
-                    @foreach (var workout in Model)
-                    {
-                        <option value="@workout.IdWorkout">@workout.Naamworkout</option>
-                    }
-                </select>
 
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg" id="startWorkoutButton" disabled>
+    <div class="row w-100">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-lg rounded-4 p-4">
+                <h3 class="mb-4">Selecteer jouw Workout</h3>
+                <form id="workoutForm" method="post" asp-action="Oefeningen">
+                    <select id="workoutSelect" class="form-select form-select-lg mb-4" name="workoutId" required>
+                        <option value="">Kies een workout</option>
+                        @foreach (var workout in Model)
+                        {
+                            <option value="@workout.IdWorkout">@workout.Naamworkout</option>
+                        }
+                    </select>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100" id="startWorkoutButton" disabled>
                         Start Workout
                     </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts {
     <script>

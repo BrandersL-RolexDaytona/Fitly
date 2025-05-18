@@ -75,10 +75,10 @@ namespace Fitly_Domain.Persistence
             WorkoutMapper workoutMapper = new WorkoutMapper();
             workoutMapper.AddWorkoutToDB(newWorkout);
         }
-        public int AddOefeningToDB(Oefening oef)
+        public int AddOefeningToDB(Oefening oef, int workoutId)
         {
             OefeningMapper oefeningMapper = new OefeningMapper();
-            return oefeningMapper.AddOefeningToDB(oef);
+            return oefeningMapper.AddOefeningToDB(oef, workoutId);
         }
         public List<OefeningType> GetAllTypes()
         {

@@ -111,38 +111,73 @@ namespace Fitly_Domain.Persistence
 
             return result;
         }
-        public int AddOefeningToDB(Oefening oef)
+
+        public int AddOefeningToDB(Oefening oef, int workoutId)
         {
             int newId = 0;
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(_connectionString))
+                using (var conn = new MySqlConnection(_connectionString))
                 {
                     conn.Open();
-                    string query = "INSERT INTO fitly.oefening (Naam, Omschrijving, Calorieen, fkType, Herhalingen, Duur) " +
-                                   "VALUES (@Naam, @Omschrijving, @Calorieen, @FkType, @Herhalingen, @Duur); " +
-                                   "SELECT LAST_INSERT_ID();";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (var transaction = conn.BeginTransaction())
                     {
-                        cmd.Parameters.AddWithValue("@Naam", oef.Naam);
-                        cmd.Parameters.AddWithValue("@Omschrijving", oef.Omschrijving ?? "");
-                        cmd.Parameters.AddWithValue("@Calorieen", oef.Calorieën);
-                        cmd.Parameters.AddWithValue("@fkType", oef.FKType);
-                        cmd.Parameters.AddWithValue("@Herhalingen", oef.Herhalingen);
-                        cmd.Parameters.AddWithValue("@Duur", oef.Duur);
+                        // Stap 1: Voeg oefening toe
+                        string insertOefeningQuery = @"
+                    INSERT INTO fitly.oefening (Naam, Omschrijving, Calorieen, fkType, Herhalingen, Duur)
+                    VALUES (@naam, @omschrijving, @calorieen, @fkType, @herhalingen, @duur);
+                    SELECT LAST_INSERT_ID();";
 
-                        newId = Convert.ToInt32(cmd.ExecuteScalar());
+                        using (var cmd = new MySqlCommand(insertOefeningQuery, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@naam", oef.Naam);
+                            cmd.Parameters.AddWithValue("@omschrijving", oef.Omschrijving ?? string.Empty);
+                            cmd.Parameters.AddWithValue("@calorieen", oef.Calorieën);
+                            cmd.Parameters.AddWithValue("@fkType", oef.FKType);
+                            cmd.Parameters.AddWithValue("@herhalingen", oef.Herhalingen);
+                            cmd.Parameters.AddWithValue("@duur", oef.Duur);
+
+                            object result = cmd.ExecuteScalar();
+                            if (result != null && int.TryParse(result.ToString(), out int id))
+                            {
+                                newId = id;
+                            }
+                            else
+                            {
+                                throw new Exception("Kon geen nieuw oefening-ID ophalen.");
+                            }
+                        }
+
+                        // Stap 2: Koppel oefening aan workout
+                        string insertRelatieQuery = @"
+                    INSERT INTO fitly.workout_has_oefening (FKWorkout, FKOefening)
+                    VALUES (@fkWorkout, @fkOefening);";
+
+                        using (var relCmd = new MySqlCommand(insertRelatieQuery, conn, transaction))
+                        {
+                            relCmd.Parameters.AddWithValue("@fkWorkout", workoutId);
+                            relCmd.Parameters.AddWithValue("@fkOefening", newId);
+                            relCmd.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Databasefout bij toevoegen van oefening of koppeling: " + ex.Message, ex);
+            }
             catch (Exception ex)
             {
-                throw new Exception("Fout bij toevoegen van oefening.", ex);
+                throw new Exception("Onverwachte fout bij toevoegen van oefening of koppeling.", ex);
             }
 
             return newId;
         }
+
         public List<Oefening> GetAlleOefeningen()
         {
             List<Oefening> result = new List<Oefening>();

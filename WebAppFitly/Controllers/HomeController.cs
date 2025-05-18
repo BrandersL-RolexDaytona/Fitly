@@ -260,7 +260,7 @@ namespace WebAppFitly.Controllers
 
             };
 
-            _controller.AddOefeningToDB(oefening);
+            _controller.AddOefeningToDB(oefening, workoutId);
 
             return RedirectToAction("Index");
         }
